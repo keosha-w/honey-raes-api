@@ -30,9 +30,9 @@ export const ServiceTickets = () => {
                     serviceTickets.map(
                         (ticketObj) => {
                             return <>
-                                        <p key={`ticket--${ticketObj.id}`}>
-                                        {ticketObj.description} submitted by {ticketObj.customer.name} assigned to {ticketObj.employee.name}
-                                        </p>
+                                    <p key={`ticket--${ticketObj.id}`}>
+                                    {ticketObj.description} submitted by {ticketObj.customer.name} assigned to {ticketObj.employee.name}
+                                    </p>
                                     </>
                         }
                     )
