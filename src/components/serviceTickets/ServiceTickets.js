@@ -1,6 +1,7 @@
 // To finish out the process of displaying all of the state from the API, you are going to make a new component that will display information about the service tickets that your employees work on for customers. It will display the following information for each ticket.
 
 import React, { useEffect, useState } from "react";
+import { useHistory } from "react-router";
 
 // Description of the service ticket
 // Name of the customer
@@ -8,7 +9,7 @@ import React, { useEffect, useState } from "react";
 
 export const ServiceTickets = () => {
  const [serviceTickets, setServiceTickets] = useState([])
-
+ const history = useHistory()
 
     useEffect(
         () => {
@@ -25,6 +26,11 @@ export const ServiceTickets = () => {
 
     return (
         <>
+            <div>
+                <button onClick={() => history.push("/serviceTickets/create")}>
+                    Create Ticket
+                </button>
+            </div>
             <div>
                 {
                     serviceTickets.map(
