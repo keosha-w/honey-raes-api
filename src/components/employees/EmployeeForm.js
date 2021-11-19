@@ -66,7 +66,7 @@ export const EmployeeForm = () => {
                         placeholder="Specialty"
                         onChange={
                             (event) => {
-                                const copy = {...copy}
+                                const copy = {...app}
                                 copy.specialty = event.target.value
                                 updateApp(copy)
                             }
