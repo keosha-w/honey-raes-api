@@ -1,5 +1,6 @@
 import React, { useState } from "react"
 import { useHistory } from "react-router";
+import "./tickets.css"
 
 export const TicketForm = () => {
     const [ticket, update] = useState({
