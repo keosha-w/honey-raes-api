@@ -14,16 +14,28 @@ export const ServiceTickets = () => {
 
     useEffect(
         () => {
-            fetch("http://localhost:8088/serviceTickets?_expand=customer&_expand=employee")
-                .then(res => res.json())
-                .then((serviceTicketArray) => {
-                    setServiceTickets(serviceTicketArray)
-                })
+            fetchServiceTickets()
         },
         []
     )
 
+    const deleteTicket = (id) => {
+        fetch(`http://localhost:8088/serviceTickets/${id}`, {
+            method: "DELETE"
+        })
+            .then(response => response.json())
+            .then(() => {
+                fetchServiceTickets()
+            })
+    }
 
+    const fetchServiceTickets = () => {
+        fetch("http://localhost:8088/serviceTickets?_expand=customer&_expand=employee")
+                .then(res => res.json())
+                .then((serviceTicketArray) => {
+                    setServiceTickets(serviceTicketArray)
+                })
+    }
 
     return (
         <>
@@ -39,6 +51,9 @@ export const ServiceTickets = () => {
                             return <>
                                         <p key={`ticket--${ticketObj.id}`} className={ticketObj.emergency ? "emergency" : ""}>
                                         {ticketObj.emergency ? "🚑" : ""} <Link to={`/tickets/${ticketObj.id}`}>{ticketObj.description}</Link> submitted by {ticketObj.customer.name} assigned to {ticketObj.employee.name}
+                                        <button onClick={() => {deleteTicket(ticketObj.id)}}>Delete</button>
+
+
                                         </p>
                                     </>
                         }

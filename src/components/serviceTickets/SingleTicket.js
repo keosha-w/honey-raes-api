@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
+import { useHistory } from "react-router"
+
 
 export const SingleTicket = () => {
     const [ticket, set] = useState({})  // State variable for current ticket object
     const [employees, setEmployees] = useState([])
     const { ticketId } = useParams()  // Variable storing the route parameter
+    const history = useHistory()
+
 
     useEffect(
         () => {
@@ -28,7 +32,7 @@ export const SingleTicket = () => {
 
         const assignEmployee = (changeEvent) => {
             const newServiceTicketObject = {
-                "customerId": localStorage.getItem("honey_customer"),
+                "customerId": ticket.customerId,
                 "employeeId": parseInt(changeEvent.target.value),
                 "description": ticket.description,
                 "emergency": ticket.emergency,
@@ -36,7 +40,7 @@ export const SingleTicket = () => {
             }
 
 
-            return fetch(`http://localhost.8088/serviceTickets/${ticketId}`, {
+            return fetch(`http://localhost:8088/serviceTickets/${ticketId}`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json"
@@ -44,7 +48,7 @@ export const SingleTicket = () => {
                 body: JSON.stringify(newServiceTicketObject)
             })
                 .then(() => {
-
+                    history.push("/serviceTickets")
                 }
                 )
         }
@@ -55,9 +59,7 @@ export const SingleTicket = () => {
                 <h3 className="ticket__description">{ticket.description}</h3>
                 <div className="ticket__customer">Submitted by {ticket.customer?.name}</div>
                 <div className="ticket__employee">
-                    <select onChange={
-                        assignEmployee
-                    }>
+                    <select id="employee" value={ ticket.employeeId } onChange={assignEmployee}>
                         <option value="0">Assign to Employee</option>
                         
                             {
